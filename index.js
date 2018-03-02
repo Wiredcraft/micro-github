@@ -18,7 +18,8 @@ const redirectWithQueryString = (res, data) => {
 const login = async (req, res) => {
   const state = await uid(20);
   states.push(state);
-  redirect(res, 302, `https://${githubUrl}/login/oauth/authorize?client_id=${process.env.GH_CLIENT_ID}&state=${state}`)
+  var scope = (req.query && req.query.scope) ? '&scope=' + req.query.scope : ''
+  redirect(res, 302, `https://${githubUrl}/login/oauth/authorize?client_id=${process.env.GH_CLIENT_ID}&state=${state}${scope}`)
 };
 
 const callback = async (req, res) => {
